@@ -131,7 +131,7 @@ public class Hero : MonoBehaviour
         if (this.canDash == true)
         {
             // for later animatior inclusion
-            //this.animator.SetBool("Dashing", true);
+            this.animator.SetBool("Dashing", true);
             this.currentState = PlayerState.dash;
             this.rb.velocity = this.movement * this.dashSpeed;
             
@@ -143,7 +143,7 @@ public class Hero : MonoBehaviour
         // allow player controle again
         this.currentState = PlayerState.walk;
         // for later animatior inclusion
-        //this.animator.SetBool("Dashing", false);
+        this.animator.SetBool("Dashing", false);
         // delay dash use
         yield return new WaitForSeconds(this.dashCoolDown);
         this.canDash = true;
