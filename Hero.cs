@@ -136,7 +136,7 @@ public class Hero : MonoBehaviour
             // for later animatior inclusion
             this.animator.SetBool("Dashing", true);
             this.playerState = PlayerState.dash;
-            this.rb.velocity = this.movement * this.dashSpeed;
+            this.rb.velocity = this.movement * moveSpeed * this.dashSpeed;
             
             yield return new WaitForSeconds(this.dashTime);
             this.canDash = false;
