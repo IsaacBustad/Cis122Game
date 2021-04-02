@@ -6,22 +6,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerState
-{
-    walk,
-    sword,
-    dash,
-    stunned,
-    interact
-}
+
 
 public class Hero : MonoBehaviour
 {
+    // make states
+    private enum PlayerState
+    {
+        walk,
+        sword,
+        dash,
+        stunned,
+        interact
+    }
+
     // sprite access for color coded testing, to be removed at later date
     [SerializeField] private SpriteRenderer spriteToColor;
     // component for movement and animation in script
-    // currentState is for changing chatacter state and accessible actions
-    public PlayerState currentState;
+    // playerState is for changing chatacter state and accessible actions
+    private PlayerState playerState;
     [SerializeField] private float moveSpeed;
 
     // dash specific
@@ -67,7 +70,7 @@ public class Hero : MonoBehaviour
             SwingSword();
         }
         
-        else if (currentState == PlayerState.walk)
+        else if (playerState == PlayerState.walk)
         {
             UpdateAnimationAndMove();
         }
@@ -114,14 +117,14 @@ public class Hero : MonoBehaviour
     {
         DoNotMove();
         this.animator.SetBool("SwingingSword", true);
-        this.currentState = PlayerState.sword;
+        this.playerState = PlayerState.sword;
     }
 
     // accessed in animation to
     private void SetNotAttacking()
     {
         this.animator.SetBool("SwingingSword", false);
-        this.currentState = PlayerState.walk;
+        this.playerState = PlayerState.walk;
     }
 
     //dash method
@@ -132,7 +135,7 @@ public class Hero : MonoBehaviour
         {
             // for later animatior inclusion
             this.animator.SetBool("Dashing", true);
-            this.currentState = PlayerState.dash;
+            this.playerState = PlayerState.dash;
             this.rb.velocity = this.movement * this.dashSpeed;
             
             yield return new WaitForSeconds(this.dashTime);
@@ -141,7 +144,7 @@ public class Hero : MonoBehaviour
         
         
         // allow player controle again
-        this.currentState = PlayerState.walk;
+        this.playerState = PlayerState.walk;
         // for later animatior inclusion
         this.animator.SetBool("Dashing", false);
         // delay dash use
