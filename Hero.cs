@@ -6,47 +6,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// make states
+public enum PlayerState
+{
+    walk,
+    sword,
+    dash,
+    cast,
+    stunned,
+    interact
+}
 
 
 public class Hero : MonoBehaviour
 {
-    // make states
-    private enum PlayerState
-    {
-        walk,
-        sword,
-        dash,
-        stunned,
-        interact
-    }
-
-    // sprite access for color coded testing, to be removed at later date
-    [SerializeField] private SpriteRenderer spriteToColor;
+    
+    
     // component for movement and animation in script
     // playerState is for changing chatacter state and accessible actions
-    private PlayerState playerState;
-    [SerializeField] private float moveSpeed;
+    public PlayerState playerState;
+    [SerializeField] public float moveSpeed;
 
     // dash specific
-    [SerializeField] private float dashTime;
-    [SerializeField] private float dashSpeed;
-    [SerializeField] private float dashCoolDown;
+    [SerializeField] public float dashTime;
+    [SerializeField] public float dashSpeed;
+    [SerializeField] public float dashCoolDown;
     [SerializeField] private bool doubleTapThreshUp = false;
     [SerializeField] private bool doubleTapThreshDown = false;
     [SerializeField] private bool doubleTapThreshRight = false;
     [SerializeField] private bool doubleTapThreshLeft = false;
     [SerializeField] private string lastMoveKey = "";
     [SerializeField] private float lastTapTime;
-    [SerializeField] private bool canDash = true;
+    [SerializeField] public bool canDash = true;
+
+    // controle map for future
+
 
 
     // components set in inspector correspond to hero body
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Animator animator;  
+    [SerializeField] public Animator animator;  
     
 
     //vector2 to multiply with speed to determine velocity to move character
     private Vector2 movement;
+
+
 
 
 
@@ -105,7 +110,7 @@ public class Hero : MonoBehaviour
     }
 
     // cancel velocity
-    private void DoNotMove()
+    public void DoNotMove()
     {
         this.rb.velocity = this.movement * 0;
     }
@@ -237,6 +242,15 @@ public class Hero : MonoBehaviour
         }
 
     }
+
+
+
+
+    // open for test
     
-        
+
+
+    
+
+
 }
