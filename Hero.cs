@@ -44,12 +44,12 @@ public class Hero : MonoBehaviour
 
 
     // components set in inspector correspond to hero body
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
     [SerializeField] public Animator animator;  
     
 
     //vector2 to multiply with speed to determine velocity to move character
-    private Vector2 movement;
+    public Vector2 movement;
 
 
 
