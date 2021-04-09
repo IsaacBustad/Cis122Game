@@ -14,17 +14,19 @@ public class ShootFireball : MonoBehaviour
     public float fireBallSpeed;
     // set throw duration
     public float throwDuration;
-    public Vector2 directionToFire;
+    private Vector2 directionToFire;
+
+    private bool canCast = true;
 
 
 
     // check for key press
     void Update()
     {
-        if(Input.GetButtonDown("FireBall"))
+        if(Input.GetButtonDown("FireBall") && this.canCast == true)
         {
             CastFireBall();
-
+            this.canCast = false;
         }
     }
 
@@ -37,8 +39,7 @@ public class ShootFireball : MonoBehaviour
         this.myHero.DoNotMove();
         this.myHero.animator.SetBool("Casting", true);
         this.StartCoroutine(SpellAndEnd());
-        //myHero.animator.SetBool("Casting", false);
-        //myHero.playerState = PlayerState.walk;
+        
         
 
     }
@@ -56,6 +57,7 @@ public class ShootFireball : MonoBehaviour
         yield return new WaitForSeconds(this.throwDuration);
         myHero.animator.SetBool("Casting", false);
         myHero.playerState = PlayerState.walk;
+        this.canCast = true;
     }
 
     

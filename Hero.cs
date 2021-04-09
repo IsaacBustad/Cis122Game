@@ -27,17 +27,7 @@ public class Hero : MonoBehaviour
     public PlayerState playerState;
     [SerializeField] public float moveSpeed;
 
-    // dash specific
-    [SerializeField] public float dashTime;
-    [SerializeField] public float dashSpeed;
-    [SerializeField] public float dashCoolDown;
-    [SerializeField] private bool doubleTapThreshUp = false;
-    [SerializeField] private bool doubleTapThreshDown = false;
-    [SerializeField] private bool doubleTapThreshRight = false;
-    [SerializeField] private bool doubleTapThreshLeft = false;
-    [SerializeField] private string lastMoveKey = "";
-    [SerializeField] private float lastTapTime;
-    [SerializeField] public bool canDash = true;
+    
 
     // controle map for future
 
@@ -69,7 +59,7 @@ public class Hero : MonoBehaviour
     {
         this.movement.x = Input.GetAxisRaw("Horizontal");
         this.movement.y = Input.GetAxisRaw("Vertical");
-        DetectDash();
+        
         if (Input.GetButton("Sword"))
         {
             SwingSword();
@@ -132,116 +122,7 @@ public class Hero : MonoBehaviour
         this.playerState = PlayerState.walk;
     }
 
-    //dash method
-    private IEnumerator Dash()
-    {
-        // execute dash
-        if (this.canDash == true)
-        {
-            // for later animatior inclusion
-            this.animator.SetBool("Dashing", true);
-            this.playerState = PlayerState.dash;
-            this.rb.velocity = this.movement * moveSpeed * this.dashSpeed;
-            
-            yield return new WaitForSeconds(this.dashTime);
-            this.canDash = false;
-        }
-        
-        
-        // allow player controle again
-        this.playerState = PlayerState.walk;
-        // for later animatior inclusion
-        this.animator.SetBool("Dashing", false);
-        // delay dash use
-        yield return new WaitForSeconds(this.dashCoolDown);
-        this.canDash = true;
-    }
-
-    private IEnumerator ManThrestUp()
-    {
-        doubleTapThreshUp = true;
-        yield return new WaitForSeconds(.2f);
-        doubleTapThreshUp = false;
-    }
-
-    private IEnumerator ManThrestDown()
-    {
-        doubleTapThreshDown = true;
-        yield return new WaitForSeconds(.2f);
-        doubleTapThreshDown = false;
-    }
-
-    private IEnumerator ManThrestLeft()
-    {
-        doubleTapThreshLeft = true;
-        yield return new WaitForSeconds(.2f);
-        doubleTapThreshLeft = false;
-    }
-
-    private IEnumerator ManThrestRight()
-    {
-        doubleTapThreshRight = true;
-        yield return new WaitForSeconds(.2f);
-        doubleTapThreshRight = false;
-    }
-
-    private void DetectDash()
-    {
-        if (Input.GetKeyDown("w"))
-        {
-            if (this.doubleTapThreshUp == true && this.lastMoveKey == "w")
-            {
-                StartCoroutine(Dash());
-            }
-
-            else
-            {
-                this.lastMoveKey = "w";
-                StartCoroutine(ManThrestUp());
-            }
-        }
-        else if (Input.GetKeyDown("s"))
-        {
-            if (this.doubleTapThreshDown == true && this.lastMoveKey == "s")
-            {
-                StartCoroutine(Dash());
-
-            }
-
-            else
-            {
-                this.lastMoveKey = "s";
-                StartCoroutine(ManThrestDown());
-            }
-        }
-        else if (Input.GetKeyDown("d"))
-        {
-            if (this.doubleTapThreshRight == true && this.lastMoveKey == "d")
-            {
-                StartCoroutine(Dash());
-            }
-
-            else
-            {
-                this.lastMoveKey = "d";
-                StartCoroutine(ManThrestRight());
-            }
-        }
-        if (Input.GetKeyDown("a"))
-        {
-            if (this.doubleTapThreshLeft == true && this.lastMoveKey == "a")
-            {
-                StartCoroutine(Dash());
-            }
-
-            else
-            {
-                this.lastMoveKey = "a";
-                StartCoroutine(ManThrestLeft());
-            }
-        }
-
-    }
+    
 
 
 
